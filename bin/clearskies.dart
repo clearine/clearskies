@@ -1,3 +1,11 @@
+import 'package:args/args.dart';
+import 'package:clearskies/src/weather.dart';
+
+final parser = ArgParser(allowTrailingOptions: false);
+
 void main(List<String> arguments) {
-  print('Hello world!');
+  parser.addOption('name', abbr: 'n');
+  parser.addOption('id', abbr: 'i');
+
+  var results = parser.parse(arguments);
 }
