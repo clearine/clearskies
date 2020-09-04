@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:http/http.dart';
 
 class Weather {
+  Weather({this.cityName, this.cityId, this.ZipCode});
+
   String cityName;
   int cityId;
   int ZipCode;
