@@ -38,4 +38,19 @@ class Weather {
     Windspeed (KM): ${json['wind']['speed']}
     ''';
   }
+
+  Future<String> fetchWeatherFromID() async {
+    if (cityId == null) return 'No city ID provided.';
+
+    var url =
+        'https://api.openweathermap.org/data/2.5/weather?id=${cityId}&units=metric&appid=KEY';
+    var request = await get(url);
+    var json = jsonDecode(request.body);
+
+    return '''
+    Description: ${json['weather'][0]['description']}
+    Temperature (C): ${json['main']['temp']}
+    Windspeed (KM): ${json['wind']['speed']}
+    ''';
+  }
 }
