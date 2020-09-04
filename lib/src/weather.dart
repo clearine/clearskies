@@ -8,7 +8,7 @@ class Weather {
   int ZipCode;
 
   Future<String> fetchWeatherFromName() async {
-    if (cityName == null) return 'No name provided.';
+    if (cityName == null) return 'No city name provided.';
 
     var url =
         'https://api.openweathermap.org/data/2.5/weather?q=${cityName.split(' ').join('+')}&units=metric&appid=KEY';
