@@ -9,6 +9,8 @@ class Weather {
   int cityId;
   int zipCode;
 
+  // TODO: Make output fancier.
+
   Future<String> fetchWeatherFromIP() async {
     var ipUrl = await get('http://ip-api.com/json/');
     var ipJson = jsonDecode(ipUrl.body);
@@ -44,6 +46,21 @@ class Weather {
 
     var url =
         'https://api.openweathermap.org/data/2.5/weather?id=${cityId}&units=metric&appid=KEY';
+    var request = await get(url);
+    var json = jsonDecode(request.body);
+
+    return '''
+    Description: ${json['weather'][0]['description']}
+    Temperature (C): ${json['main']['temp']}
+    Windspeed (KM): ${json['wind']['speed']}
+    ''';
+  }
+
+  Future<String> fetchWeatherFromZIP() async {
+    if (zipCode == null) return 'No ZIP code provided.';
+
+    var url =
+        'https://api.openweathermap.org/data/2.5/weather?zip=${zipCode}&units=metric&appid=KEY';
     var request = await get(url);
     var json = jsonDecode(request.body);
 
