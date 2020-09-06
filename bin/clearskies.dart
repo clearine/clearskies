@@ -6,7 +6,7 @@ import 'package:clearskies/src/weather.dart';
 final parser = ArgParser(allowTrailingOptions: false);
 
 void main(List<String> arguments) async {
-  final helpMessage = '''Usage: clearskies -m [<mode>] [<name/id/ip/zip>]
+  const helpMessage = '''Usage: clearskies -m [<mode>] [<name/id/ip/zip>]
   Modes:
     name: Get weather by name
     id: Get weather by OpenWeatherMap ID
