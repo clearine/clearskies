@@ -6,7 +6,7 @@ import 'package:clearskies/src/weather.dart';
 final parser = ArgParser(allowTrailingOptions: false);
 
 void main(List<String> arguments) async {
-  final helpMessage = '''Usage: clearskies -m [<mode>]
+  final helpMessage = '''Usage: clearskies -m [<mode>] [<name/id/ip/zip>]
   Modes:
     name: Get weather by name
     id: Get weather by OpenWeatherMap ID
@@ -33,6 +33,8 @@ void main(List<String> arguments) async {
       print(weather);
     } on NoSuchMethodError {
       print('Not a valid city.');
+    } on RangeError {
+      print(helpMessage);
     }
   } else if (results['mode'] == 'id') {
     try {
@@ -41,6 +43,8 @@ void main(List<String> arguments) async {
       print(weather);
     } on NoSuchMethodError {
       print('Not a valid ID');
+    } on RangeError {
+      print(helpMessage);
     }
   } else if (results['mode'] == 'ip') {
     try {
@@ -56,6 +60,8 @@ void main(List<String> arguments) async {
       print(weather);
     } on NoSuchMethodError {
       print('Not a valid ZIP code.');
+    } on RangeError {
+      print(helpMessage);
     }
   }
 }
