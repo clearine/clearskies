@@ -6,8 +6,17 @@ final parser = ArgParser(allowTrailingOptions: false);
 // TODO: Add some more error handling.
 
 void main(List<String> arguments) async {
+  final helpMessage = '''Usage: clearskies -m [<mode>]
+  Modes:
+    name: Get weather by name
+    id: Get weather by OpenWeatherMap ID
+    ip: Get weather by IP address
+    zip: Get weather by ZIP code''';
+
   parser.addOption('mode', abbr: 'm', allowed: ['name', 'id', 'ip', 'zip']);
   var results = parser.parse(arguments);
+
+  if (results['mode'] == null) print(helpMessage);
 
   if (results['mode'] == 'name') {
     try {
