@@ -10,7 +10,7 @@ class UserInterface extends Window {
   @override
   void draw() {
     super.draw();
-    writeCentered('Welcome to Clear Skies');
+    writeCentered('${Color.WHITE} Welcome to Clear Skies');
   }
 
   @override
