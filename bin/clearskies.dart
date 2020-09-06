@@ -1,9 +1,9 @@
+import 'dart:io';
+
 import 'package:args/args.dart';
 import 'package:clearskies/src/weather.dart';
 
 final parser = ArgParser(allowTrailingOptions: false);
-
-// TODO: Add some more error handling.
 
 void main(List<String> arguments) async {
   final helpMessage = '''Usage: clearskies -m [<mode>]
@@ -14,7 +14,15 @@ void main(List<String> arguments) async {
     zip: Get weather by ZIP code''';
 
   parser.addOption('mode', abbr: 'm', allowed: ['name', 'id', 'ip', 'zip']);
-  var results = parser.parse(arguments);
+
+  try {
+    parser.parse(arguments); // check if no mode is provided
+  } on FormatException {
+    print(helpMessage);
+    exit(1); // exit code 1 meaning failure
+  }
+
+  final results = parser.parse(arguments);
 
   if (results['mode'] == null) print(helpMessage);
 
