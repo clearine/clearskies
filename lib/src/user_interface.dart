@@ -10,7 +10,8 @@ class UserInterface extends Window {
   @override
   void draw() {
     super.draw();
-    writeCentered('${Color.WHITE} Welcome to Clear Skies');
+    writeCentered(
+        '${Color.WHITE}Welcome to Clear Skies. Press h to show the keybinds.');
   }
 
   @override
@@ -22,9 +23,39 @@ class UserInterface extends Window {
       exit(0);
     });
 
-    Keyboard.bindKeys(['w', 'W']).listen((_) async {
+    Keyboard.bindKeys(['h', 'H']).listen((_) {
+      super.draw();
+      writeCentered(
+          '${Color.WHITE}d: fetch weather from ID\t i: fetch weather from IP\t n: fetch weather from name\t z: fetch weather from ZIP code');
+    });
+
+    // TODO: Show user input.
+
+    Keyboard.bindKeys(['d', 'D']).listen((_) async {
+      super.draw();
+      var input = await readInput('${Color.WHITE}Enter a city ID: ');
+      var cityId = int.parse(input);
+      writeCentered(await Weather('key', cityId: cityId).fetchWeatherFromID());
+    });
+
+    Keyboard.bindKeys(['i', 'I']).listen((_) async {
       super.draw();
       writeCentered(await Weather('key').fetchWeatherFromIP());
+    });
+
+    Keyboard.bindKeys(['n', 'N']).listen((_) async {
+      super.draw();
+      var cityName = await readInput('${Color.WHITE}Enter a city name: ');
+      writeCentered(
+          await Weather('key', cityName: cityName).fetchWeatherFromName());
+    });
+
+    Keyboard.bindKeys(['z', 'Z']).listen((_) async {
+      super.draw();
+      var input = await readInput('${Color.WHITE}Enter a ZIP code: ');
+      var zipCode = int.parse(input);
+      writeCentered(
+          await Weather('key', zipCode: zipCode).fetchWeatherFromZIP());
     });
   }
 }
