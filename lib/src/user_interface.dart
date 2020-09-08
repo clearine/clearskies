@@ -29,12 +29,12 @@ class UserInterface extends Window {
           '${Color.WHITE}d: fetch weather from ID\t i: fetch weather from IP\t n: fetch weather from name\t z: fetch weather from ZIP code');
     });
 
-    // TODO: Show user input.
-
     Keyboard.bindKeys(['d', 'D']).listen((_) async {
-      super.draw();
+      close();
+      Console.eraseDisplay();
       var input = await readInput('${Color.WHITE}Enter a city ID: ');
       var cityId = int.parse(input);
+      super.draw();
       writeCentered(await Weather('key', cityId: cityId).fetchWeatherFromID());
     });
 
@@ -44,16 +44,20 @@ class UserInterface extends Window {
     });
 
     Keyboard.bindKeys(['n', 'N']).listen((_) async {
-      super.draw();
+      close();
+      Console.eraseDisplay();
       var cityName = await readInput('${Color.WHITE}Enter a city name: ');
+      super.draw();
       writeCentered(
           await Weather('key', cityName: cityName).fetchWeatherFromName());
     });
 
     Keyboard.bindKeys(['z', 'Z']).listen((_) async {
-      super.draw();
+      close();
+      Console.eraseDisplay();
       var input = await readInput('${Color.WHITE}Enter a ZIP code: ');
       var zipCode = int.parse(input);
+      super.draw();
       writeCentered(
           await Weather('key', zipCode: zipCode).fetchWeatherFromZIP());
     });
