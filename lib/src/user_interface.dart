@@ -70,7 +70,7 @@ class UserInterface extends Window {
       try {
         int.parse(cityIdString);
       } on FormatException {
-        print('Not a valid ID.\n');
+        print('Not a valid ID.');
         await getUserInputID();
       }
       idNotSet = false;
@@ -88,7 +88,7 @@ class UserInterface extends Window {
       try {
         int.parse(zipCodeString);
       } on FormatException {
-        print('Not a valid ID.\n');
+        print('Not a valid ZIP code.');
         await getUserInputID();
       }
       zipNotSet = false;
