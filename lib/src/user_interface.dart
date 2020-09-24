@@ -84,7 +84,7 @@ class UserInterface extends Window {
     int zipCode;
     var zipNotSet = true;
     while (zipNotSet) {
-      zipCodeString = await readInput('${Color.WHITE}Enter a city ID: ');
+      zipCodeString = await readInput('${Color.WHITE}Enter a city ZIP: ');
       try {
         int.parse(zipCodeString);
       } on FormatException {
