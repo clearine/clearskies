@@ -71,11 +71,11 @@ class UserInterface extends Window {
         int.parse(cityIdString);
       } on FormatException {
         print('Not a valid ID.');
-        await getUserInputID();
+        continue;
       }
       idNotSet = false;
-      cityId = int.parse(cityIdString);
     }
+    cityId = int.parse(cityIdString);
     return Weather('key', cityId: cityId).fetchWeatherFromID();
   }
 
@@ -89,11 +89,11 @@ class UserInterface extends Window {
         int.parse(zipCodeString);
       } on FormatException {
         print('Not a valid ZIP code.');
-        await getUserInputID();
+        continue;
       }
       zipNotSet = false;
-      zipCode = int.parse(zipCodeString);
     }
+    zipCode = int.parse(zipCodeString);
     return Weather('key', zipCode: zipCode).fetchWeatherFromZIP();
   }
 }
