@@ -32,10 +32,9 @@ class UserInterface extends Window {
     Keyboard.bindKeys(['d', 'D']).listen((_) async {
       close();
       Console.eraseDisplay();
-      var input = await readInput('${Color.WHITE}Enter a city ID: ');
-      var cityId = int.parse(input);
+      var weather = await getUserInputID();
       super.draw();
-      writeCentered(await Weather('key', cityId: cityId).fetchWeatherFromID());
+      writeCentered(weather);
     });
 
     Keyboard.bindKeys(['i', 'I']).listen((_) async {
@@ -55,11 +54,46 @@ class UserInterface extends Window {
     Keyboard.bindKeys(['z', 'Z']).listen((_) async {
       close();
       Console.eraseDisplay();
-      var input = await readInput('${Color.WHITE}Enter a ZIP code: ');
-      var zipCode = int.parse(input);
+      var weather = await getUserInputZIP();
       super.draw();
-      writeCentered(
-          await Weather('key', zipCode: zipCode).fetchWeatherFromZIP());
+      writeCentered(weather);
     });
+  }
+
+  // made these functions for error handling purposes
+  Future<String> getUserInputID() async {
+    String cityIdString;
+    int cityId;
+    var idNotSet = true;
+    while (idNotSet) {
+      cityIdString = await readInput('${Color.WHITE}Enter a city ID: ');
+      try {
+        int.parse(cityIdString);
+      } on FormatException {
+        print('Not a valid ID.\n');
+        await getUserInputID();
+      }
+      idNotSet = false;
+      cityId = int.parse(cityIdString);
+    }
+    return Weather('key', cityId: cityId).fetchWeatherFromID();
+  }
+
+  Future<String> getUserInputZIP() async {
+    String zipCodeString;
+    int zipCode;
+    var zipNotSet = true;
+    while (zipNotSet) {
+      zipCodeString = await readInput('${Color.WHITE}Enter a city ID: ');
+      try {
+        int.parse(zipCodeString);
+      } on FormatException {
+        print('Not a valid ID.\n');
+        await getUserInputID();
+      }
+      zipNotSet = false;
+      zipCode = int.parse(zipCodeString);
+    }
+    return Weather('key', zipCode: zipCode).fetchWeatherFromZIP();
   }
 }
