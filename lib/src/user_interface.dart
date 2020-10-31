@@ -2,39 +2,54 @@ import 'package:clearskies/src/weather.dart';
 import 'package:dart_console/dart_console.dart';
 
 final console = Console();
+final row = (console.windowHeight / 2).round() - 1;
 
 class UserInterface {
-  void showWeatherFromID() async {
+  void init() {
+    console
+      ..clearScreen()
+      ..hideCursor()
+      ..setBackgroundColor(ConsoleColor.white)
+      ..setForegroundColor(ConsoleColor.black)
+      ..writeLine('Clear Skies', TextAlignment.center)
+      ..resetColorAttributes()
+      ..cursorPosition = Coordinate(row - 2, 0);
+  }
+
+  void displayWeather(String weatherInfo) {
+    init();
+    console.writeLine(weatherInfo, TextAlignment.center);
+  }
+
+  void getWeatherFromID() async {
     console.clearScreen();
     console.showCursor();
-    console.writeLine('Enter a city ID: ');
+    console.write('Enter a city ID: ');
     final input = console.readLine(cancelOnBreak: true);
     final cityId = int.parse(input);
-    console
-        .writeLine(await Weather('key', cityId: cityId).fetchWeatherFromID());
+    displayWeather(await Weather('key', cityId: cityId).fetchWeatherFromID());
   }
 
-  void showWeatherFromIP() async {
+  void getWeatherFromIP() async {
     console.clearScreen();
-    console.writeLine(await Weather('key').fetchWeatherFromIP());
+    displayWeather(await Weather('key').fetchWeatherFromIP());
   }
 
-  void showWeatherFromName() async {
+  void getWeatherFromName() async {
     console.clearScreen();
     console.showCursor();
-    console.writeLine('Enter a city name: ');
+    console.write('Enter a city name: ');
     final name = console.readLine(cancelOnBreak: true);
-    console
-        .writeLine(await Weather('key', cityName: name).fetchWeatherFromID());
+    displayWeather(await Weather('key', cityName: name).fetchWeatherFromID());
   }
 
-  void showWeatherFromZIP() async {
+  void getWeatherFromZIP() async {
     console.clearScreen();
     console.showCursor();
-    console.writeLine('Enter a ZIP code: ');
+    console.write('Enter a ZIP code: ');
     final input = console.readLine(cancelOnBreak: true);
     final zipCode = int.parse(input);
-    console.writeLine(
+    displayWeather(
         await Weather('key', zipCode: zipCode).fetchWeatherFromZIP());
   }
 }

@@ -1,35 +1,40 @@
+import 'dart:io';
+
 import 'package:clearskies/src/user_interface.dart';
 import 'package:dart_console/dart_console.dart';
 
 final interface = UserInterface();
 final console = Console();
+const message =
+    'd: fetch weather from ID \t i: fetch weather from IP \t n: fetch weather from name \t z: fetch weather from ZIP code';
 void main() {
-  final row = (console.windowHeight / 2).round() - 1;
-
+  interface.init();
   console
-    ..clearScreen()
-    ..hideCursor()
-    ..setBackgroundColor(ConsoleColor.white)
-    ..setForegroundColor(ConsoleColor.black)
-    ..writeLine('Clear Skies', TextAlignment.center)
-    ..resetColorAttributes()
-    ..cursorPosition = Coordinate(row - 2, 0)
-    ..writeLine('test text', TextAlignment.center);
+    ..writeLine('d: fetch weather from ID', TextAlignment.center)
+    ..writeLine('i: fetch weather from IP', TextAlignment.center)
+    ..writeLine('n: fetch weather from name', TextAlignment.center)
+    ..writeLine('z: fetch weather from ZIP code', TextAlignment.center);
 
   var key = console.readKey();
 
+  if (key.controlChar == ControlCharacter.ctrlC) {
+    console.clearScreen();
+    console.showCursor();
+    exit(0);
+  }
+
   switch (key.char) {
     case 'd':
-      interface.showWeatherFromID();
+      interface.getWeatherFromID();
       break;
     case 'i':
-      interface.showWeatherFromIP();
+      interface.getWeatherFromIP();
       break;
     case 'n':
-      interface.showWeatherFromName();
+      interface.getWeatherFromName();
       break;
     case 'z':
-      interface.showWeatherFromZIP();
+      interface.getWeatherFromZIP();
       break;
   }
 }
