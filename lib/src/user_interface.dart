@@ -1,65 +1,21 @@
-import 'dart:io';
-
 import 'package:clearskies/src/weather.dart';
-import 'package:console/console.dart';
-import 'package:console/curses.dart';
+import 'package:dart_console/dart_console.dart';
 
-class UserInterface extends Window {
-  UserInterface() : super('Clear Skies');
+final console = Console();
 
-  @override
-  void draw() {
-    super.draw();
-    writeCentered(
-        '${Color.WHITE}Welcome to Clear Skies. Press h to show the keybinds.');
-  }
+class UserInterface {
+  var screens = <Function>[
+    (() {
+      final row = (console.windowHeight / 2).round() - 1;
 
-  @override
-  void initialize() {
-    Keyboard.bindKeys(['q', 'Q']).listen((_) {
-      close();
-      Console.resetAll();
-      Console.eraseDisplay();
-      exit(0);
-    });
-
-    Keyboard.bindKeys(['h', 'H']).listen((_) {
-      super.draw();
-      writeCentered(
-          '${Color.WHITE}d: fetch weather from ID\t i: fetch weather from IP\t n: fetch weather from name\t z: fetch weather from ZIP code');
-    });
-
-    Keyboard.bindKeys(['d', 'D']).listen((_) async {
-      close();
-      Console.eraseDisplay();
-      var input = await readInput('${Color.WHITE}Enter a city ID: ');
-      var cityId = int.parse(input);
-      super.draw();
-      writeCentered(await Weather('key', cityId: cityId).fetchWeatherFromID());
-    });
-
-    Keyboard.bindKeys(['i', 'I']).listen((_) async {
-      super.draw();
-      writeCentered(await Weather('key').fetchWeatherFromIP());
-    });
-
-    Keyboard.bindKeys(['n', 'N']).listen((_) async {
-      close();
-      Console.eraseDisplay();
-      var cityName = await readInput('${Color.WHITE}Enter a city name: ');
-      super.draw();
-      writeCentered(
-          await Weather('key', cityName: cityName).fetchWeatherFromName());
-    });
-
-    Keyboard.bindKeys(['z', 'Z']).listen((_) async {
-      close();
-      Console.eraseDisplay();
-      var input = await readInput('${Color.WHITE}Enter a ZIP code: ');
-      var zipCode = int.parse(input);
-      super.draw();
-      writeCentered(
-          await Weather('key', zipCode: zipCode).fetchWeatherFromZIP());
-    });
-  }
+      console
+        ..clearScreen()
+        ..setBackgroundColor(ConsoleColor.white)
+        ..setForegroundColor(ConsoleColor.black)
+        ..writeLine('Clear Skies', TextAlignment.center)
+        ..resetColorAttributes()
+        ..cursorPosition = Coordinate(row - 2, 0)
+        ..writeLine('test', TextAlignment.center);
+    })
+  ];
 }

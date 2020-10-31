@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:console/console.dart';
 import 'package:http/http.dart';
 
 class Weather {
@@ -22,7 +20,7 @@ class Weather {
     var weatherRequest = await get(weatherUrl);
     var weatherJson = jsonDecode(weatherRequest.body);
 
-    return '''${Color.WHITE}
+    return '''
     Description: ${weatherJson['weather'][0]['description']}
     Temperature (C): ${weatherJson['main']['temp']}
     Windspeed (KM): ${weatherJson['wind']['speed']}
@@ -37,7 +35,7 @@ class Weather {
     var request = await get(url);
     var json = jsonDecode(request.body);
 
-    return '''${Color.WHITE}
+    return '''
     Description: ${json['weather'][0]['description']}
     Temperature (C): ${json['main']['temp']}
     Windspeed (KM): ${json['wind']['speed']}
@@ -52,7 +50,7 @@ class Weather {
     var request = await get(url);
     var json = jsonDecode(request.body);
 
-    return '''${Color.WHITE}
+    return '''
     Description: ${json['weather'][0]['description']}
     Temperature (C): ${json['main']['temp']}
     Windspeed (KM): ${json['wind']['speed']}
@@ -67,7 +65,7 @@ class Weather {
     var request = await get(url);
     var json = jsonDecode(request.body);
 
-    return '''${Color.WHITE}
+    return '''
     Description: ${json['weather'][0]['description']}
     Temperature (C): ${json['main']['temp']}
     Windspeed (KM): ${json['wind']['speed']}
