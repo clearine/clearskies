@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:clearskies/src/weather.dart';
 import 'package:dart_console/dart_console.dart';
 
@@ -26,6 +28,11 @@ class UserInterface {
     console.showCursor();
     console.write('Enter a city ID: ');
     final input = console.readLine(cancelOnBreak: true);
+    if (input == null) {
+      // input can only be null if user does ctrl+c
+      console.clearScreen();
+      exit(0);
+    }
     final cityId = int.parse(input);
     displayWeather(await Weather('key', cityId: cityId).fetchWeatherFromID());
   }
@@ -40,6 +47,10 @@ class UserInterface {
     console.showCursor();
     console.write('Enter a city name: ');
     final name = console.readLine(cancelOnBreak: true);
+    if (name == null) {
+      console.clearScreen();
+      exit(0);
+    }
     displayWeather(await Weather('key', cityName: name).fetchWeatherFromID());
   }
 
@@ -48,6 +59,10 @@ class UserInterface {
     console.showCursor();
     console.write('Enter a ZIP code: ');
     final input = console.readLine(cancelOnBreak: true);
+    if (input == null) {
+      console.clearScreen();
+      exit(0);
+    }
     final zipCode = int.parse(input);
     displayWeather(
         await Weather('key', zipCode: zipCode).fetchWeatherFromZIP());
