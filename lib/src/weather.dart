@@ -4,6 +4,11 @@ import 'package:dart_console/dart_console.dart';
 import 'package:http/http.dart';
 
 final console = Console();
+const Map<dynamic, String> errorCodes = {
+  401: 'Error 401. Did you provide an API key?',
+  '404': 'Error 404. Make sure the provided name/ID/ZIP is valid.',
+  429: 'Error 429. You have made more than 60 API calls per minute.'
+};
 
 class Weather {
   Weather(this.apiKey, {this.cityName, this.cityId, this.zipCode});
@@ -12,12 +17,6 @@ class Weather {
   String apiKey;
   int cityId;
   int zipCode;
-
-  Map<dynamic, String> errorCodes = {
-    401: 'Error 401. Did you provide an API key?',
-    '404': 'Error 404. Make sure the provided name/ID/ZIP is valid.',
-    429: 'Error 429. You have made more than 60 API calls per minute.'
-  };
 
   bool checkForError(code) {
     if (errorCodes[code] == null) return false;
