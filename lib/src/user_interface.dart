@@ -18,6 +18,36 @@ class UserInterface {
       ..cursorPosition = Coordinate(row - 2, 0);
   }
 
+  void getSelection() {
+    var selectionSet = false;
+
+    while (!selectionSet) {
+      var selection = console.readKey();
+      if (selection.controlChar == ControlCharacter.ctrlC) {
+        console.clearScreen();
+        console.showCursor();
+        exit(0);
+      }
+
+      switch (selection.char) {
+        case 'd':
+          getWeatherFromID();
+          break;
+        case 'i':
+          getWeatherFromIP();
+          break;
+        case 'n':
+          getWeatherFromName();
+          break;
+        case 'z':
+          getWeatherFromZIP();
+          break;
+        default:
+          break;
+      }
+    }
+  }
+
   void displayWeather(String weatherInfo) {
     init();
     console.writeLine(weatherInfo, TextAlignment.center);
@@ -60,7 +90,7 @@ class UserInterface {
       try {
         int.parse(input);
       } on FormatException {
-        console.write('Not a valid ID.\n');
+        console.writeLine('Not a valid ID.');
         continue;
       }
       idSet = true;
@@ -89,7 +119,7 @@ class UserInterface {
       try {
         int.parse(input);
       } on FormatException {
-        console.write('Not a valid ZIP code.\n');
+        console.writeLine('Not a valid ZIP code.');
         continue;
       }
       zipSet = true;
@@ -97,5 +127,6 @@ class UserInterface {
     }
     displayWeather(
         await Weather('key', zipCode: zipCode).fetchWeatherFromZIP());
+    getSelection();
   }
 }
