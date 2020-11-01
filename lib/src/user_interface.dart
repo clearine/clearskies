@@ -23,13 +23,6 @@ class UserInterface {
     console.writeLine(weatherInfo, TextAlignment.center);
   }
 
-  void getWeatherFromID() async {
-    console.clearScreen();
-    console.showCursor();
-    final weather = await getUserInputID();
-    displayWeather(weather);
-  }
-
   void getWeatherFromIP() async {
     console.clearScreen();
     displayWeather(await Weather('key').fetchWeatherFromIP());
@@ -47,17 +40,12 @@ class UserInterface {
     displayWeather(await Weather('key', cityName: name).fetchWeatherFromID());
   }
 
-  void getWeatherFromZIP() async {
-    console.clearScreen();
-    console.showCursor();
-    final weather = await getUserInputZIP();
-    displayWeather(weather);
-  }
-
-  // made these functions for error handling purposes
-  Future<String> getUserInputID() async {
+  void getWeatherFromID() async {
     int cityId;
     var idSet = false;
+
+    console.clearScreen();
+    console.showCursor();
 
     while (!idSet) {
       console.write('Enter a city ID: ');
@@ -78,12 +66,15 @@ class UserInterface {
       idSet = true;
       cityId = int.parse(input);
     }
-    return Weather('key', cityId: cityId).fetchWeatherFromID();
+    displayWeather(await Weather('key', cityId: cityId).fetchWeatherFromID());
   }
 
-  Future<String> getUserInputZIP() async {
+  void getWeatherFromZIP() async {
     int zipCode;
     var zipSet = false;
+
+    console.clearScreen();
+    console.showCursor();
 
     while (!zipSet) {
       console.write('Enter a ZIP code: ');
@@ -104,6 +95,7 @@ class UserInterface {
       zipSet = true;
       zipCode = int.parse(input);
     }
-    return Weather('key', zipCode: zipCode).fetchWeatherFromZIP();
+    displayWeather(
+        await Weather('key', zipCode: zipCode).fetchWeatherFromZIP());
   }
 }
