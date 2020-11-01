@@ -26,15 +26,8 @@ class UserInterface {
   void getWeatherFromID() async {
     console.clearScreen();
     console.showCursor();
-    console.write('Enter a city ID: ');
-    final input = console.readLine(cancelOnBreak: true);
-    if (input == null) {
-      // input can only be null if user does ctrl+c
-      console.clearScreen();
-      exit(0);
-    }
-    final cityId = int.parse(input);
-    displayWeather(await Weather('key', cityId: cityId).fetchWeatherFromID());
+    final weather = await getUserInputID();
+    displayWeather(weather);
   }
 
   void getWeatherFromIP() async {
@@ -57,14 +50,60 @@ class UserInterface {
   void getWeatherFromZIP() async {
     console.clearScreen();
     console.showCursor();
-    console.write('Enter a ZIP code: ');
-    final input = console.readLine(cancelOnBreak: true);
-    if (input == null) {
-      console.clearScreen();
-      exit(0);
+    final weather = await getUserInputZIP();
+    displayWeather(weather);
+  }
+
+  // made these functions for error handling purposes
+  Future<String> getUserInputID() async {
+    int cityId;
+    var idSet = false;
+
+    while (!idSet) {
+      console.write('Enter a city ID: ');
+      final input = console.readLine(cancelOnBreak: true);
+
+      if (input == null) {
+        // input can only be null if user does ctrl + c
+        console.clearScreen();
+        exit(0);
+      }
+
+      try {
+        int.parse(input);
+      } on FormatException {
+        print('Not a valid ID.\n');
+        continue;
+      }
+      idSet = true;
+      cityId = int.parse(input);
     }
-    final zipCode = int.parse(input);
-    displayWeather(
-        await Weather('key', zipCode: zipCode).fetchWeatherFromZIP());
+    return Weather('key', cityId: cityId).fetchWeatherFromID();
+  }
+
+  Future<String> getUserInputZIP() async {
+    int zipCode;
+    var zipSet = false;
+
+    while (!zipSet) {
+      console.write('Enter a ZIP code: ');
+      final input = console.readLine(cancelOnBreak: true);
+
+      if (input == null) {
+        // input can only be null if user does ctrl + c
+        console.clearScreen();
+        exit(0);
+      }
+
+      try {
+        int.parse(input);
+      } on FormatException {
+        print('Not a valid ZIP code.\n');
+        continue;
+      }
+      zipSet = true;
+      zipCode = int.parse(input);
+    }
+    return Weather('key', zipCode: zipCode).fetchWeatherFromZIP();
   }
 }

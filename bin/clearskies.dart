@@ -5,8 +5,6 @@ import 'package:dart_console/dart_console.dart';
 
 final interface = UserInterface();
 final console = Console();
-const message =
-    'd: fetch weather from ID \t i: fetch weather from IP \t n: fetch weather from name \t z: fetch weather from ZIP code';
 void main() {
   interface.init();
   console
