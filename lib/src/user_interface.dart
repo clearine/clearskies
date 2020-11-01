@@ -20,7 +20,6 @@ class UserInterface {
 
   void getSelection() {
     var selectionSet = false;
-
     while (!selectionSet) {
       var selection = console.readKey();
       if (selection.controlChar == ControlCharacter.ctrlC) {
@@ -45,12 +44,14 @@ class UserInterface {
         default:
           break;
       }
+      selectionSet = true;
     }
   }
 
   void displayWeather(String weatherInfo) {
     init();
     console.writeLine(weatherInfo, TextAlignment.center);
+    getSelection();
   }
 
   void getWeatherFromIP() async {
