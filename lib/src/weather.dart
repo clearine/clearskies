@@ -1,5 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
+
+import 'package:dart_console/dart_console.dart';
 import 'package:http/http.dart';
+
+final console = Console();
 
 class Weather {
   Weather(this.apiKey, {this.cityName, this.cityId, this.zipCode});
@@ -8,6 +13,17 @@ class Weather {
   String apiKey;
   int cityId;
   int zipCode;
+
+  Map<dynamic, String> errorCodes = {
+    401: 'Error 401. Did you provide an API key?',
+    '404': 'Error 404. Make sure the provided name/ID/ZIP is valid.',
+    429: 'Error 429. You have made more than 60 API calls per minute.'
+  };
+
+  bool checkForError(code) {
+    if (errorCodes[code] == null) return false;
+    return true;
+  }
 
   // TODO: Make output fancier.
   // TODO: Fix output formatting.
@@ -19,6 +35,10 @@ class Weather {
         'https://api.openweathermap.org/data/2.5/weather?q=${ipJson['city']}&units=metric&appid=$apiKey';
     var weatherRequest = await get(weatherUrl);
     var weatherJson = jsonDecode(weatherRequest.body);
+
+    if (checkForError(weatherJson['cod'])) {
+      return errorCodes[weatherJson['cod']];
+    }
 
     return '''
     Description: ${weatherJson['weather'][0]['description']}
@@ -35,6 +55,10 @@ class Weather {
     var request = await get(url);
     var json = jsonDecode(request.body);
 
+    if (checkForError(json['cod'])) {
+      return errorCodes[json['cod']];
+    }
+
     return '''
     Description: ${json['weather'][0]['description']}
     Temperature (C): ${json['main']['temp']}
@@ -50,6 +74,10 @@ class Weather {
     var request = await get(url);
     var json = jsonDecode(request.body);
 
+    if (checkForError(json['cod'])) {
+      return errorCodes[json['cod']];
+    }
+
     return '''
     Description: ${json['weather'][0]['description']}
     Temperature (C): ${json['main']['temp']}
@@ -64,6 +92,10 @@ class Weather {
         'https://api.openweathermap.org/data/2.5/weather?zip=${zipCode}&units=metric&appid=$apiKey';
     var request = await get(url);
     var json = jsonDecode(request.body);
+
+    if (checkForError(json['cod'])) {
+      return errorCodes[json['cod']];
+    }
 
     return '''
     Description: ${json['weather'][0]['description']}

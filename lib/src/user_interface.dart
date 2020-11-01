@@ -37,7 +37,7 @@ class UserInterface {
       console.clearScreen();
       exit(0);
     }
-    displayWeather(await Weather('key', cityName: name).fetchWeatherFromID());
+    displayWeather(await Weather('key', cityName: name).fetchWeatherFromName());
   }
 
   void getWeatherFromID() async {
@@ -60,7 +60,7 @@ class UserInterface {
       try {
         int.parse(input);
       } on FormatException {
-        print('Not a valid ID.\n');
+        console.write('Not a valid ID.\n');
         continue;
       }
       idSet = true;
@@ -89,7 +89,7 @@ class UserInterface {
       try {
         int.parse(input);
       } on FormatException {
-        print('Not a valid ZIP code.\n');
+        console.write('Not a valid ZIP code.\n');
         continue;
       }
       zipSet = true;
