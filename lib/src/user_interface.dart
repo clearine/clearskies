@@ -18,6 +18,15 @@ class UserInterface {
       ..cursorPosition = Coordinate(row - 2, 0);
   }
 
+  void showWelcome() {
+    init();
+    console
+      ..writeLine('d: fetch weather from ID', TextAlignment.center)
+      ..writeLine('i: fetch weather from IP', TextAlignment.center)
+      ..writeLine('n: fetch weather from name', TextAlignment.center)
+      ..writeLine('z: fetch weather from ZIP code', TextAlignment.center);
+  }
+
   void getSelection() {
     var selectionSet = false;
     while (!selectionSet) {
@@ -41,8 +50,12 @@ class UserInterface {
         case 'z':
           getWeatherFromZIP();
           break;
-        default:
+        case 'h':
+          showWelcome();
+          getSelection();
           break;
+        default:
+          continue;
       }
       selectionSet = true;
     }
