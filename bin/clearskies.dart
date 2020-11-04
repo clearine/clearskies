@@ -5,5 +5,4 @@ final interface = UserInterface();
 final console = Console();
 void main() {
   interface.showWelcome();
-  interface.getSelection();
 }

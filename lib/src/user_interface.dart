@@ -24,7 +24,10 @@ class UserInterface {
       ..writeLine('d: fetch weather from ID', TextAlignment.center)
       ..writeLine('i: fetch weather from IP', TextAlignment.center)
       ..writeLine('n: fetch weather from name', TextAlignment.center)
-      ..writeLine('z: fetch weather from ZIP code', TextAlignment.center);
+      ..writeLine('z: fetch weather from ZIP code', TextAlignment.center)
+      ..writeLine('h: show this message', TextAlignment.center)
+      ..writeLine('q: quit clear skies', TextAlignment.center);
+    getSelection();
   }
 
   void getSelection() {
@@ -52,7 +55,9 @@ class UserInterface {
           break;
         case 'h':
           showWelcome();
-          getSelection();
+          break;
+        case 'q':
+          exit(0);
           break;
         default:
           continue;
