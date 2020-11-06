@@ -57,6 +57,8 @@ class UserInterface {
           showWelcome();
           break;
         case 'q':
+          console.clearScreen();
+          console.showCursor();
           exit(0);
           break;
         default:
