@@ -85,6 +85,7 @@ class UserInterface {
     console.write('Enter a city name: ');
     final name = console.readLine(cancelOnBreak: true);
     if (name == null) {
+      // input can only be null if user does ctrl + c
       console.clearScreen();
       exit(0);
     }
@@ -106,14 +107,11 @@ class UserInterface {
         // input can only be null if user does ctrl + c
         console.clearScreen();
         exit(0);
-      }
-
-      try {
-        int.parse(input);
-      } on FormatException {
+      } else if (int.tryParse(input) == null) {
         console.writeLine('Not a valid ID.');
         continue;
       }
+
       idSet = true;
       cityId = int.parse(input);
     }
@@ -135,14 +133,11 @@ class UserInterface {
         // input can only be null if user does ctrl + c
         console.clearScreen();
         exit(0);
-      }
-
-      try {
-        int.parse(input);
-      } on FormatException {
+      } else if (int.tryParse(input) == null) {
         console.writeLine('Not a valid ZIP code.');
         continue;
       }
+
       zipSet = true;
       zipCode = int.parse(input);
     }
