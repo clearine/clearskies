@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:clearskies/src/weather.dart';
 import 'package:dart_console/dart_console.dart';
 
+final weather = Weather('key');
 final console = Console();
 final row = (console.windowHeight / 2).round() - 1;
 
@@ -76,7 +77,7 @@ class UserInterface {
 
   void getWeatherFromIP() async {
     console.clearScreen();
-    displayWeather(await Weather('key').fetchWeatherFromIP());
+    displayWeather(await weather.fetchWeatherFromIP());
   }
 
   void getWeatherFromName() async {
@@ -89,11 +90,11 @@ class UserInterface {
       console.clearScreen();
       exit(0);
     }
-    displayWeather(await Weather('key', cityName: name).fetchWeatherFromName());
+    displayWeather(await weather.fetchWeatherFromName(name));
   }
 
   void getWeatherFromID() async {
-    int cityId;
+    int id;
     var idSet = false;
 
     console.clearScreen();
@@ -113,13 +114,13 @@ class UserInterface {
       }
 
       idSet = true;
-      cityId = int.parse(input);
+      id = int.parse(input);
     }
-    displayWeather(await Weather('key', cityId: cityId).fetchWeatherFromID());
+    displayWeather(await weather.fetchWeatherFromID(id));
   }
 
   void getWeatherFromZIP() async {
-    int zipCode;
+    int zip;
     var zipSet = false;
 
     console.clearScreen();
@@ -139,10 +140,9 @@ class UserInterface {
       }
 
       zipSet = true;
-      zipCode = int.parse(input);
+      zip = int.parse(input);
     }
-    displayWeather(
-        await Weather('key', zipCode: zipCode).fetchWeatherFromZIP());
+    displayWeather(await weather.fetchWeatherFromZIP(zip));
     getSelection();
   }
 }

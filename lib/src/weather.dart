@@ -6,12 +6,8 @@ import 'package:http/http.dart';
 final console = Console();
 
 class Weather {
-  Weather(this.apiKey, {this.cityName, this.cityId, this.zipCode});
-
-  String cityName;
+  Weather(this.apiKey);
   String apiKey;
-  int cityId;
-  int zipCode;
 
   final Map<dynamic, String> errorCodes = const {
     401: 'Error 401. Did you provide an API key?',
@@ -46,11 +42,11 @@ class Weather {
     ''';
   }
 
-  Future<String> fetchWeatherFromName() async {
-    if (cityName == null) return 'No city name provided.';
+  Future<String> fetchWeatherFromName(String name) async {
+    if (name == null) return 'No city name provided.';
 
     var url =
-        'https://api.openweathermap.org/data/2.5/weather?q=${cityName.split(' ').join('+')}&units=metric&appid=$apiKey';
+        'https://api.openweathermap.org/data/2.5/weather?q=${name.split(' ').join('+')}&units=metric&appid=$apiKey';
     var request = await get(url);
     var json = jsonDecode(request.body);
 
@@ -65,11 +61,11 @@ class Weather {
     ''';
   }
 
-  Future<String> fetchWeatherFromID() async {
-    if (cityId == null) return 'No city ID provided.';
+  Future<String> fetchWeatherFromID(int id) async {
+    if (id == null) return 'No city ID provided.';
 
     var url =
-        'https://api.openweathermap.org/data/2.5/weather?id=${cityId}&units=metric&appid=$apiKey';
+        'https://api.openweathermap.org/data/2.5/weather?id=${id}&units=metric&appid=$apiKey';
     var request = await get(url);
     var json = jsonDecode(request.body);
 
@@ -84,11 +80,11 @@ class Weather {
     ''';
   }
 
-  Future<String> fetchWeatherFromZIP() async {
-    if (zipCode == null) return 'No ZIP code provided.';
+  Future<String> fetchWeatherFromZIP(int zip) async {
+    if (zip == null) return 'No ZIP code provided.';
 
     var url =
-        'https://api.openweathermap.org/data/2.5/weather?zip=${zipCode}&units=metric&appid=$apiKey';
+        'https://api.openweathermap.org/data/2.5/weather?zip=${zip}&units=metric&appid=$apiKey';
     var request = await get(url);
     var json = jsonDecode(request.body);
 
