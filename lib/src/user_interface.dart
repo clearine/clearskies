@@ -69,9 +69,20 @@ class UserInterface {
     }
   }
 
-  void displayWeather(String weatherInfo) {
+  void displayWeather(WeatherInfo weatherInfo) {
     init();
-    console.writeLine(weatherInfo, TextAlignment.center);
+    if (weatherInfo.errorCode != null) {
+      console.writeLine(
+          WeatherInfo.errorCodes[weatherInfo.errorCode], TextAlignment.center);
+    } else {
+      console
+        ..writeLine(
+            'Description: ${weatherInfo.description}', TextAlignment.center)
+        ..writeLine('Temperature: ${weatherInfo.temperature.toString()}',
+            TextAlignment.center)
+        ..writeLine('Wind speed: ${weatherInfo.windSpeed.toString()}',
+            TextAlignment.center);
+    }
     getSelection();
   }
 
@@ -81,14 +92,24 @@ class UserInterface {
   }
 
   void getWeatherFromName() async {
+    String name;
+    var nameSet = false;
+
     console.clearScreen();
     console.showCursor();
-    console.write('Enter a city name: ');
-    final name = console.readLine(cancelOnBreak: true);
-    if (name == null) {
-      // input can only be null if user does ctrl + c
-      console.clearScreen();
-      exit(0);
+
+    while (!nameSet) {
+      console.write('Enter a city name: ');
+      final input = console.readLine(cancelOnBreak: true);
+      if (input == null) {
+        // input can only be null if user does ctrl + c
+        console.clearScreen();
+        exit(0);
+      } else if (input == '') {
+        continue;
+      }
+      nameSet = true;
+      name = input;
     }
     displayWeather(await weather.fetchWeatherFromName(name));
   }
