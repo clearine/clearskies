@@ -27,6 +27,8 @@ class Weather {
 
     if (weatherJson['main']['temp'] is int) {
       weatherJson['main']['temp'] = weatherJson['main']['temp'].toDouble();
+    } else if (weatherJson['wind']['speed'] is int) {
+      weatherJson['wind']['speed'] = weatherJson['wind']['speed'].toDouble();
     }
 
     return WeatherInfo(weatherJson['weather'][0]['description'],
@@ -43,6 +45,8 @@ class Weather {
 
     if (json['main']['temp'] is int) {
       json['main']['temp'] = json['main']['temp'].toDouble();
+    } else if (json['wind']['speed'] is int) {
+      json['wind']['speed'] = json['wind']['speed'].toDouble();
     }
 
     return WeatherInfo(json['weather'][0]['description'], json['main']['temp'],
@@ -51,7 +55,7 @@ class Weather {
 
   Future<WeatherInfo> fetchWeatherFromID(int id) async {
     var json = await _getJson(
-        'https://api.openweathermap.org/data/2.5/weather?id=${id}&units=metric&appid=$apiKey');
+        'https://api.openweathermap.org/data/2.5/weather?id=$id&units=metric&appid=$apiKey');
 
     if (WeatherInfo.checkForError(json['cod'])) {
       return WeatherInfo(null, null, null, errorCode: json['cod']);
@@ -59,6 +63,8 @@ class Weather {
 
     if (json['main']['temp'] is int) {
       json['main']['temp'] = json['main']['temp'].toDouble();
+    } else if (json['wind']['speed'] is int) {
+      json['wind']['speed'] = json['wind']['speed'].toDouble();
     }
 
     return WeatherInfo(json['weather'][0]['description'], json['main']['temp'],
@@ -67,7 +73,7 @@ class Weather {
 
   Future<WeatherInfo> fetchWeatherFromZIP(int zip) async {
     var json = await _getJson(
-        'https://api.openweathermap.org/data/2.5/weather?zip=${zip}&units=metric&appid=$apiKey');
+        'https://api.openweathermap.org/data/2.5/weather?zip=$zip&units=metric&appid=$apiKey');
 
     if (WeatherInfo.checkForError(json['cod'])) {
       return WeatherInfo(null, null, null, errorCode: json['cod']);
@@ -75,6 +81,8 @@ class Weather {
 
     if (json['main']['temp'] is int) {
       json['main']['temp'] = json['main']['temp'].toDouble();
+    } else if (json['wind']['speed'] is int) {
+      json['wind']['speed'] = json['wind']['speed'].toDouble();
     }
 
     return WeatherInfo(json['weather'][0]['description'], json['main']['temp'],
