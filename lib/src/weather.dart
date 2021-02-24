@@ -27,7 +27,9 @@ class Weather {
 
     if (weatherJson['main']['temp'] is int) {
       weatherJson['main']['temp'] = weatherJson['main']['temp'].toDouble();
-    } else if (weatherJson['wind']['speed'] is int) {
+    }
+
+    if (weatherJson['wind']['speed'] is int) {
       weatherJson['wind']['speed'] = weatherJson['wind']['speed'].toDouble();
     }
 
@@ -45,7 +47,9 @@ class Weather {
 
     if (json['main']['temp'] is int) {
       json['main']['temp'] = json['main']['temp'].toDouble();
-    } else if (json['wind']['speed'] is int) {
+    }
+
+    if (json['wind']['speed'] is int) {
       json['wind']['speed'] = json['wind']['speed'].toDouble();
     }
 
@@ -63,7 +67,9 @@ class Weather {
 
     if (json['main']['temp'] is int) {
       json['main']['temp'] = json['main']['temp'].toDouble();
-    } else if (json['wind']['speed'] is int) {
+    }
+
+    if (json['wind']['speed'] is int) {
       json['wind']['speed'] = json['wind']['speed'].toDouble();
     }
 
@@ -81,7 +87,9 @@ class Weather {
 
     if (json['main']['temp'] is int) {
       json['main']['temp'] = json['main']['temp'].toDouble();
-    } else if (json['wind']['speed'] is int) {
+    }
+
+    if (json['wind']['speed'] is int) {
       json['wind']['speed'] = json['wind']['speed'].toDouble();
     }
 
