@@ -164,6 +164,5 @@ class UserInterface {
       zip = int.parse(input);
     }
     displayWeather(await weather.fetchWeatherFromZIP(zip));
-    getSelection();
   }
 }
