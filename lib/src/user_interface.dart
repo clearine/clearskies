@@ -115,7 +115,7 @@ class UserInterface {
   }
 
   void getWeatherFromID() async {
-    int id;
+    String id;
     var idSet = false;
 
     console.clearScreen();
@@ -129,19 +129,18 @@ class UserInterface {
         // input can only be null if user does ctrl + c
         console.clearScreen();
         exit(0);
-      } else if (int.tryParse(input) == null) {
-        console.writeLine('Not a valid ID.');
+      } else if (input == '') {
         continue;
       }
 
       idSet = true;
-      id = int.parse(input);
+      id = input;
     }
     displayWeather(await weather.fetchWeatherFromID(id));
   }
 
   void getWeatherFromZIP() async {
-    int zip;
+    String zip;
     var zipSet = false;
 
     console.clearScreen();
@@ -155,13 +154,12 @@ class UserInterface {
         // input can only be null if user does ctrl + c
         console.clearScreen();
         exit(0);
-      } else if (int.tryParse(input) == null) {
-        console.writeLine('Not a valid ZIP code.');
+      } else if (input == '') {
         continue;
       }
 
       zipSet = true;
-      zip = int.parse(input);
+      zip = input;
     }
     displayWeather(await weather.fetchWeatherFromZIP(zip));
   }

@@ -57,7 +57,7 @@ class Weather {
         json['wind']['speed']);
   }
 
-  Future<WeatherInfo> fetchWeatherFromID(int id) async {
+  Future<WeatherInfo> fetchWeatherFromID(String id) async {
     var json = await _getJson(
         'https://api.openweathermap.org/data/2.5/weather?id=$id&units=metric&appid=$apiKey');
 
@@ -77,7 +77,7 @@ class Weather {
         json['wind']['speed']);
   }
 
-  Future<WeatherInfo> fetchWeatherFromZIP(int zip) async {
+  Future<WeatherInfo> fetchWeatherFromZIP(String zip) async {
     var json = await _getJson(
         'https://api.openweathermap.org/data/2.5/weather?zip=$zip&units=metric&appid=$apiKey');
 
