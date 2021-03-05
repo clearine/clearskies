@@ -108,6 +108,8 @@ class WeatherInfo {
   dynamic errorCode;
 
   static final Map<dynamic, String> errorCodes = const {
+    // error 400 is the invalid ZIP error code, so the message for 404 also works.
+    '400': 'Error 404. Make sure the provided name/ID/ZIP is valid.',
     401: 'Error 401. Did you provide an API key?',
     '404': 'Error 404. Make sure the provided name/ID/ZIP is valid.',
     429: 'Error 429. You have made more than 60 API calls per minute.'
