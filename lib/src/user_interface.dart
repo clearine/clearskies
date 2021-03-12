@@ -92,7 +92,7 @@ class UserInterface {
   }
 
   void getWeatherFromName() async {
-    String name;
+    String? name;
     var nameSet = false;
 
     console.clearScreen();
@@ -111,11 +111,11 @@ class UserInterface {
       nameSet = true;
       name = input;
     }
-    displayWeather(await weather.fetchWeatherFromName(name));
+    displayWeather(await weather.fetchWeatherFromName(name!));
   }
 
   void getWeatherFromID() async {
-    String id;
+    String? id;
     var idSet = false;
 
     console.clearScreen();
@@ -140,7 +140,7 @@ class UserInterface {
   }
 
   void getWeatherFromZIP() async {
-    String zip;
+    String? zip;
     var zipSet = false;
 
     console.clearScreen();

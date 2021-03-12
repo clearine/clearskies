@@ -9,7 +9,7 @@ class Weather {
   Weather(this.apiKey);
   String apiKey;
 
-  dynamic _getJson(String url) async {
+  dynamic _getJson(Uri url) async {
     var getRequest = await get(url);
     return jsonDecode(getRequest.body);
   }
@@ -17,9 +17,11 @@ class Weather {
   // TODO: Make output fancier.
 
   Future<WeatherInfo> fetchWeatherFromIP() async {
-    var ipJson = await _getJson('http://ip-api.com/json/');
-    var weatherJson = await _getJson(
-        'https://api.openweathermap.org/data/2.5/weather?q=${ipJson['city']}&units=metric&appid=$apiKey');
+    var ipJson = await _getJson(Uri.http('ip-api.com', '/json'));
+    var weatherJson = await _getJson(Uri.https(
+        'api.openweathermap.org',
+        '/data/2.5/weather',
+        {'q': ipJson['city'], 'units': 'metric', 'appid': apiKey}));
 
     if (WeatherInfo.checkForError(weatherJson['cod'])) {
       return WeatherInfo(null, null, null, errorCode: weatherJson['cod']);
@@ -38,8 +40,10 @@ class Weather {
   }
 
   Future<WeatherInfo> fetchWeatherFromName(String name) async {
-    var json = await _getJson(
-        'https://api.openweathermap.org/data/2.5/weather?q=${name.split(' ').join('+')}&units=metric&appid=$apiKey');
+    var json = await _getJson((Uri.https(
+        'api.openweathermap.org',
+        '/data/2.5/weather',
+        {'q': name.split(' ').join('+'), 'units': 'metric', 'appid': apiKey})));
 
     if (WeatherInfo.checkForError(json['cod'])) {
       return WeatherInfo(null, null, null, errorCode: json['cod']);
@@ -57,9 +61,13 @@ class Weather {
         json['wind']['speed']);
   }
 
-  Future<WeatherInfo> fetchWeatherFromID(String id) async {
+  Future<WeatherInfo> fetchWeatherFromID(String? id) async {
     var json = await _getJson(
-        'https://api.openweathermap.org/data/2.5/weather?id=$id&units=metric&appid=$apiKey');
+        (Uri.https('api.openweathermap.org', '/data/2.5/weather', {
+      'id': id,
+      'units': 'metric',
+      'appid': apiKey,
+    })));
 
     if (WeatherInfo.checkForError(json['cod'])) {
       return WeatherInfo(null, null, null, errorCode: json['cod']);
@@ -77,9 +85,13 @@ class Weather {
         json['wind']['speed']);
   }
 
-  Future<WeatherInfo> fetchWeatherFromZIP(String zip) async {
+  Future<WeatherInfo> fetchWeatherFromZIP(String? zip) async {
     var json = await _getJson(
-        'https://api.openweathermap.org/data/2.5/weather?zip=$zip&units=metric&appid=$apiKey');
+        (Uri.https('api.openweathermap.org', '/data/2.5/weather', {
+      'zip': zip,
+      'units': 'metric',
+      'appid': apiKey,
+    })));
 
     if (WeatherInfo.checkForError(json['cod'])) {
       return WeatherInfo(null, null, null, errorCode: json['cod']);
@@ -102,9 +114,9 @@ class WeatherInfo {
   WeatherInfo(this.description, this.temperature, this.windSpeed,
       {this.errorCode});
 
-  String description;
-  double temperature;
-  double windSpeed;
+  String? description;
+  double? temperature;
+  double? windSpeed;
   dynamic errorCode;
 
   static final Map<dynamic, String> errorCodes = const {
