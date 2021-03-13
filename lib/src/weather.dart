@@ -40,10 +40,8 @@ class Weather {
   }
 
   Future<WeatherInfo> fetchWeatherFromName(String name) async {
-    var json = await _getJson((Uri.https(
-        'api.openweathermap.org',
-        '/data/2.5/weather',
-        {'q': name.split(' ').join('+'), 'units': 'metric', 'appid': apiKey})));
+    var json = await _getJson((Uri.https('api.openweathermap.org',
+        '/data/2.5/weather', {'q': name, 'units': 'metric', 'appid': apiKey})));
 
     if (WeatherInfo.checkForError(json['cod'])) {
       return WeatherInfo(null, null, null, errorCode: json['cod']);
