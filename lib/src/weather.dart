@@ -1,9 +1,6 @@
 import 'dart:convert';
 
-import 'package:dart_console/dart_console.dart';
 import 'package:http/http.dart';
-
-final console = Console();
 
 class Weather {
   Weather(this.apiKey);
